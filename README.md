@@ -62,6 +62,8 @@ log - bot log [owner only]
 🤧🤧🤧🤧🤧🤧🤧
 ![Don't Deploy](https://telegra.ph/file/854e5ce82bf8474a2d16b.png)
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 
 ## Setting up config file
 ```
