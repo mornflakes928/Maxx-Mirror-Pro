@@ -22,14 +22,18 @@ class AriaDownloadHelper(DownloadHelper):
         download = api.get_download(gid)
         self.name = download.name
         sname = download.name
-        gdrive = GoogleDriveHelper(None)
-        smsg, button = gdrive.drive_list(sname)
         if STOP_DUPLICATE_MIRROR:
-            if smsg:
-                dl.getListener().onDownloadError(f'😡 𝑭𝒊𝒍𝒆 𝒊𝒔 𝒂𝒍𝒓𝒆𝒂𝒅𝒚 𝒂𝒗𝒂𝒊𝒍𝒂𝒃𝒍𝒆 𝒊𝒏 𝑫𝒓𝒊𝒗𝒆\n𝑭𝒊𝒔𝒓𝒕 𝒔𝒆𝒂𝒓𝒄𝒉 𝑩𝒆𝒇𝒐𝒓𝒆 𝑴𝒊𝒓𝒓𝒐𝒓𝒊𝒏𝒈 𝒂𝒏𝒚𝒕𝒉𝒊𝒏𝒈 😡\n𝑰𝒇 𝒚𝒐𝒖 𝒅𝒐 𝒕𝒉𝒊𝒔 𝒂𝒈𝒂𝒊𝒏❗ 𝒀𝒐𝒖 𝒘𝒊𝒍𝒍 𝒃𝒆 𝑩𝒂𝒏 😐.\n\n')
-                print(dl.getListener())
-                sendMarkup(" 𝐇𝐞𝐫𝐞 𝐚𝐫𝐞 𝐭𝐡𝐞 𝐒𝐞𝐚𝐫𝐜𝐡 🔍 𝐑𝐞𝐬𝐮𝐥𝐭𝐬:👇👇", dl.getListener().bot, dl.getListener().update, button)
-                aria2.remove([download])
+          if dl.getListener().isTar == True:
+            sname = sname + ".tar"
+          if dl.getListener().extract == True:
+            smsg = None
+          else:
+            gdrive = GoogleDriveHelper(None)
+            smsg, button = gdrive.drive_list(sname)
+          if smsg:
+              dl.getListener().onDownloadError(f'😡😡File is already available in drive. You should have search before mirror any file. You might get ban if you do this again. This download has been stopped.\n\n')
+              sendMarkup(" Here are the search results:👇👇", dl.getListener().bot, dl.getListener().update, button)
+              aria2.remove([download])
             return
         update_all_messages()
  
