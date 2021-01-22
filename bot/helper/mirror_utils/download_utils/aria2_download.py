@@ -7,13 +7,13 @@ from bot.helper.telegram_helper.message_utils import *
 import threading
 from aria2p import API
 from time import sleep
-
-
+ 
+ 
 class AriaDownloadHelper(DownloadHelper):
-
+ 
     def __init__(self):
         super().__init__()
-
+ 
     @new_thread
     def __onDownloadStarted(self, api, gid):
         sleep(1)
@@ -22,8 +22,10 @@ class AriaDownloadHelper(DownloadHelper):
         download = api.get_download(gid)
         self.name = download.name
         sname = download.name
+        gdrive = GoogleDriveHelper(None)
+        smsg, button = gdrive.drive_list(sname)
         if STOP_DUPLICATE_MIRROR:
-          if dl.getListener().isTar == True:
+             if dl.getListener().isTar == True:
             sname = sname + ".tar"
           if dl.getListener().extract == True:
             smsg = None
@@ -36,6 +38,7 @@ class AriaDownloadHelper(DownloadHelper):
               aria2.remove([download])
           return
         update_all_messages()
+ 
     def __onDownloadComplete(self, api: API, gid):
         LOGGER.info(f"onDownloadComplete: {gid}")
         dl = getDownloadByGid(gid)
@@ -51,19 +54,19 @@ class AriaDownloadHelper(DownloadHelper):
             LOGGER.info(f'Changed gid from {gid} to {new_gid}')
         else:
             if dl: threading.Thread(target=dl.getListener().onDownloadComplete).start()
-
+ 
     @new_thread
     def __onDownloadPause(self, api, gid):
         LOGGER.info(f"onDownloadPause: {gid}")
         dl = getDownloadByGid(gid)
-        dl.getListener().onDownloadError('Download stopped by user!')
-
+        dl.getListener().onDownloadError('Download stopped by user!🌜🌛')
+ 
     @new_thread
     def __onDownloadStopped(self, api, gid):
         LOGGER.info(f"onDownloadStop: {gid}")
         dl = getDownloadByGid(gid)
-        if dl: dl.getListener().onDownloadError('Download stopped by user!')
-
+        if dl: dl.getListener().onDownloadError('𝐘𝐨𝐮𝐫 𝐋𝐢𝐧𝐤 𝐢𝐬 𝐃𝐄𝐀𝐃 ❗ 😒 𝐃𝐨𝐧❜𝐭 𝐮𝐬𝐞 𝐋𝐨𝐰 𝐒𝐞𝐞𝐝𝐬 𝐓𝐨𝐫𝐫𝐞𝐧𝐭')
+ 
     @new_thread
     def __onDownloadError(self, api, gid):
         sleep(0.5) #sleep for split second to ensure proper dl gid update from onDownloadComplete
@@ -73,23 +76,25 @@ class AriaDownloadHelper(DownloadHelper):
         error = download.error_message
         LOGGER.info(f"Download Error: {error}")
         if dl: dl.getListener().onDownloadError(error)
-
+ 
     def start_listener(self):
         aria2.listen_to_notifications(threaded=True, on_download_start=self.__onDownloadStarted,
                                       on_download_error=self.__onDownloadError,
                                       on_download_pause=self.__onDownloadPause,
                                       on_download_stop=self.__onDownloadStopped,
                                       on_download_complete=self.__onDownloadComplete)
-
-
-    def add_download(self, link: str, path, listener, filename):
+ 
+ 
+    def add_download(self, link: str, path,listener):
         if is_magnet(link):
-            download = aria2.add_magnet(link, {'dir': path, 'out': filename})
+            download = aria2.add_magnet(link, {'dir': path})
         else:
-            download = aria2.add_uris([link], {'dir': path, 'out': filename})
+            download = aria2.add_uris([link], {'dir': path})
         if download.error_message: #no need to proceed further at this point
             listener.onDownloadError(download.error_message)
             return 
         with download_dict_lock:
             download_dict[listener.uid] = AriaDownloadStatus(download.gid,listener)
             LOGGER.info(f"Started: {download.gid} DIR:{download.dir} ")
+ 
+ 
