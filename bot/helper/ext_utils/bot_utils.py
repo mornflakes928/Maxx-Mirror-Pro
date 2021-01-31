@@ -13,8 +13,8 @@ URL_REGEX = r"(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+"
  
  
 class MirrorStatus:
-    STATUS_UPLOADING = "𝗨𝗽𝗹𝗼𝗮𝗱𝗶𝗻𝗚...⬆️"
-    STATUS_DOWNLOADING = "𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗶𝗻𝗚...⬇️"
+    STATUS_UPLOADING = "UPLOADING...⬆️"
+    STATUS_DOWNLOADING = "DOWNLOADING...⬇️"
     STATUS_WAITING = "Queued...📝"
     STATUS_FAILED = "Failed 🚫. Cleaning download"
     STATUS_CANCELLED = "Cancelled ❎"
@@ -90,9 +90,9 @@ def get_progress_bar_string(status):
  
 def get_readable_message():
     with download_dict_lock:
-        msg = "<b>✥══ @DWIKIKK ══✥</b>"
+        msg = "<b>✥══ `@DWIKIKK` ══✥</b>"
         for download in list(download_dict.values()):
-            msg += f"\n📁 𝗙𝗶𝗹𝗲𝗡𝗮𝗺𝗲: <code>{download.name()}</code>"
+            msg += f"\n📁 Nama File: <code>{download.name()}</code>"
             msg += f"\n {download.status()}"
             if download.status() != MirrorStatus.STATUS_ARCHIVING and download.status() != MirrorStatus.STATUS_EXTRACTING:
                 msg += f"\n{get_progress_bar_string(download)} {download.progress()}" \
