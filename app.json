@@ -92,23 +92,23 @@
         "value": "",
         "required": false
       },
-      "MEGA_PASSWORD": {
-        "description": "Mega Password.",
+      "BUTTON_THREE_NAME": {
+        "description": "button three name",
         "value": "",
         "required": false
       },
-      "MEGA_PASSWORD": {
-        "description": "Mega Password.",
+      "BUTTON_THREE_URL": {
+        "description": "button three url",
         "value": "",
         "required": false
       },
-      "MEGA_PASSWORD": {
-        "description": "Mega Password.",
+      "BUTTON_FOUR_NAME": {
+        "description": "button four name",
         "value": "",
         "required": false
       },
-      "MEGA_PASSWORD": {
-        "description": "Mega Password.",
+      "BUTTON_FOUR_URL": {
+        "description": "button four url",
         "value": "",
         "required": false
       },
