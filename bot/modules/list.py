@@ -17,10 +17,10 @@ def list_drive(update,context):
         if button:
             editMessage(msg, reply, button)
         else:
-            editMessage('tidak ditemukan', reply, button)
+            editMessage('tidak ditemukan. contoh mencari Avengers Infinity War cukup tulis /list avengers saja', reply, button)
  
     except IndexError:
-        sendMessage('ketik /list lalu nama film, contoh /list avengers.endgame (spasi ganti titik)', context.bot, update)
+        sendMessage('ketik /list lalu nama film, contoh mencari Avengers Infinity War cukup tulis /list avengers', context.bot, update)
  
  
 list_handler = CommandHandler(BotCommands.ListCommand, list_drive,filters=CustomFilters.authorized_chat | CustomFilters.authorized_user)
