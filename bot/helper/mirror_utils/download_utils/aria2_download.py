@@ -31,7 +31,7 @@ class AriaDownloadHelper(DownloadHelper):
             gdrive = GoogleDriveHelper(None)
             smsg, button = gdrive.drive_list(sname)
           if smsg:
-              dl.getListener().onDownloadError(f'⚠️⚠️ File sudah ada di database, harap /list dahulu sebelum menggunakan /mirror, anda akan dikick jika melakukan ini lagi. This download has been stopped.\n\n')
+              dl.getListener().onDownloadError(f'⚠️⚠️ File sudah ada di database, harap /list dahulu sebelum menggunakan /mirror. This download has been stopped.\n\n')
               sendMarkup(" Here are the search results:👇👇", dl.getListener().bot, dl.getListener().update, button)
               aria2.remove([download])
           return
@@ -57,13 +57,13 @@ class AriaDownloadHelper(DownloadHelper):
     def __onDownloadPause(self, api, gid):
         LOGGER.info(f"onDownloadPause: {gid}")
         dl = getDownloadByGid(gid)
-        dl.getListener().onDownloadError('Download stopped by user!🌜🌛')
+        dl.getListener().onDownloadError('Download dihentikan oleh user!🌜🌛')
  
     @new_thread
     def __onDownloadStopped(self, api, gid):
         LOGGER.info(f"onDownloadStop: {gid}")
         dl = getDownloadByGid(gid)
-        if dl: dl.getListener().onDownloadError('𝗟𝗶𝗻𝗸 𝗮𝗻𝗱𝗮 𝗠𝗮𝘁𝗶 ❗ 😒 𝗝𝗮𝗻𝗴𝗮𝗻 𝗴𝘂𝗻𝗮𝗸𝗮𝗻 𝗧𝗼𝗿𝗿𝗲𝗻𝘁 𝗹𝗼𝘄 𝘀𝗲𝗲𝗱𝘀')
+        if dl: dl.getListener().onDownloadError('Download dibatalkan, Jangan gunakan torrent yang telah mati')
  
     @new_thread
     def __onDownloadError(self, api, gid):
